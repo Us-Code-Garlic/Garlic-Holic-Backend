@@ -1,0 +1,29 @@
+= API Documentation
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:snippets: build/generated-snippets
+
+== Introduce
+
+This Core API provides core endpoints for the IGarlicYou project.
+
+== Core API
+
+=== Voice Chat API
+==== Http Request
+include::{snippets}/voice-chat/http-request.adoc[]
+==== Http Response
+include::{snippets}/voice-chat/http-response.adoc[]
+
+=== Read All Report API
+==== Http Request
+include::{snippets}/read-all-report/http-request.adoc[]
+==== Http Response
+include::{snippets}/read-all-report/http-response.adoc[]
+
+
+'''

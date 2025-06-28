@@ -1,0 +1,52 @@
+{
+  "state": {
+    "patient_id": "patient_001",
+    "dementia_result": {
+      "diagnosis": "yes",
+      "confidence": 0.65,
+      "contents": "\"어떤 기억이 안 나시는지 조금 더 자세히 말씀해주시겠어요? 제가 혹시 도와드릴 수 있을지도 몰라요.\"",
+      "check_results": [
+        {
+          "type": "conversation_analysis",
+          "confidence": 0.8,
+          "details": "\"기억이 안 난다\"는 직접적인 표현은 기억력 문제를 암시하며, 치매 의심 증상 중 하나인 기억력 저하를 나타낼 수 있습니다. 어떤 종류의 기억이 안 나는지 구체적으로 파악하기 위해 추가적인 질문이 필요합니다."
+        },
+        {
+          "type": "pronunciation_clarity",
+          "sub_analyses": [
+            {
+              "type": "text_pronunciation_analysis",
+              "confidence": 0.5,
+              "details": "\"기억이 안나.\" 라는 짧은 문장만으로는 발음이나 언어 표현의 어눌함을 정확히 판단하기 어렵습니다. 하지만 다음과 같은 가능성을 생각해 볼 수 있습니다."
+            }
+          ]
+        },
+        {
+          "type": "memory_recall",
+          "confidence": 0.5,
+          "details": ""
+        },
+        {
+          "type": "repetitive_speech",
+          "confidence": 0.5,
+          "details": ""
+        }
+      ]
+    },
+    "medicine_result": {
+      "time": "",
+      "medicine_name": "",
+      "dosage": "",
+      "needs_reminder": false
+    },
+    "mood_result": {
+      "mood": "나쁨",
+      "confidence": 0.8
+    },
+    "health_result": {
+      "status": "기억력 저하로 인해 건강 상태가 좋지 않음",
+      "confidence": 0.8
+    }
+  },
+  "next_action": "치매 검사 완료 - 추가 상담이 필요할 수 있습니다."
+}
