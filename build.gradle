@@ -5,10 +5,6 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
-configurations {
-    asciidoctorExt
-}
-
 group = 'com.garlic-holic'
 version = '0.0.1-SNAPSHOT'
 
@@ -18,7 +14,9 @@ java {
     }
 }
 
+// 여기서 한 번만 선언
 configurations {
+    asciidoctorExt
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -30,32 +28,37 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly    'com.mysql:mysql-connector-j'
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // Google Cloud Speech
+    implementation('com.google.cloud:google-cloud-speech:4.32.0') {
+        exclude group: 'io.grpc', module: 'grpc-protobuf-lite'
+    }
+    implementation 'io.grpc:grpc-protobuf:1.62.2'
+    implementation 'com.google.protobuf:protobuf-java:3.25.2'
+    implementation 'com.google.auth:google-auth-library-oauth2-http:1.22.0'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    implementation 'com.google.cloud:google-cloud-speech:4.32.0'
-    implementation 'com.google.auth:google-auth-library-oauth2-http:1.22.0'
-
-    // Rest Docs
-    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    // Asciidoctor용 추가 의존성
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
+// Rest Docs snippetsDir 설정
 ext {
     snippetsDir = file('build/generated-snippets')
 }
 
 test {
+    useJUnitPlatform()
     outputs.dir snippetsDir
 }
 
@@ -70,15 +73,4 @@ bootJar {
     from("build/docs/asciidoc") {
         into("static/docs")
     }
-}
-
-tasks.register('copyRestDocs', Copy) {
-    dependsOn asciidoctor
-    from("build/docs/asciidoc")
-    into("src/main/resources/static/docs")
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-    outputs.dir snippetsDir
 }

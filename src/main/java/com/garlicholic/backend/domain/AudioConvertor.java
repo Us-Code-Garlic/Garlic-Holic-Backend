@@ -9,18 +9,16 @@ import java.io.IOException;
 public class AudioConvertor {
 
     public File convertWebmToWav(String fileName) throws IOException, InterruptedException {
-        File inputFile = new File("uploads/" + fileName);
-        File outputFile = new File("outputs/" + fileName + ".wav");
+        File inputFile = new File("/app/uploads/" + fileName);
+        File outputFile = new File("/app/outputs/" + fileName + ".wav");
 
         ProcessBuilder builder = new ProcessBuilder(
                 "ffmpeg",
-                "-loglevel", "quiet",
                 "-y",
                 "-i", inputFile.getAbsolutePath(),
                 outputFile.getAbsolutePath()
         );
-        builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
-        builder.redirectError(ProcessBuilder.Redirect.DISCARD);
+        builder.redirectError(ProcessBuilder.Redirect.INHERIT);
 
         Process process = builder.start();
         int exitCode = process.waitFor();

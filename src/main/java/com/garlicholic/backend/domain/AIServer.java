@@ -14,7 +14,7 @@ import java.io.File;
 @Component
 public class AIServer {
 
-    private final String AI_SERVER_HOST = "http://localhost:8100";
+    private final String AI_SERVER_HOST = "http://13.209.146.78:8000";
 
     public DiagnosisResponse postCheckDementia(String text, File wavFile) {
         WebClient webClient = WebClient.create(AI_SERVER_HOST);
@@ -34,7 +34,7 @@ public class AIServer {
     }
 
     public SummarizeResult postSummery(String text) {
-        return WebClient.create("http://localhost:9000").post()
+        return WebClient.create("http://13.209.146.78:8001").post()
                 .uri("/summarize")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(new SummarizeRequest(text)))

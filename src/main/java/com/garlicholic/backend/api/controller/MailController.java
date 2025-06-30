@@ -28,7 +28,6 @@ import java.util.List;
 public class MailController {
 
     private final AIServer aiServer;
-    private final ReportCoreService reportCoreService;
     private final MailCoreService mailCoreService;
     private final DementiaHistoryJpaRepository  dementiaHistoryJpaRepository;
 
@@ -36,12 +35,11 @@ public class MailController {
     public ApiResponse<?> sendMail() throws MessagingException, UnsupportedEncodingException {
         String text = concatTodayFields(1L);
         SummarizeResult result = aiServer.postSummery(text);
-        reportCoreService.create(result.isDementia_suspicion() ? "치매 의심" : "문제 없음");
         ReportMailData reportMailData = new ReportMailData(
                 LocalDateFormatter.fromLocalDateTime(LocalDateTime.now()),
                 result.isDementia_suspicion() ? "치매 의심" : "정상",
                 result.getSummary());
-        mailCoreService.sendMail("dgc394722@gmail.com", reportMailData);
+        mailCoreService.sendMail("bananana0118@gmail.com", reportMailData);
         log.info("Mail sent successfully");
         return ApiResponse.success(null);
     }

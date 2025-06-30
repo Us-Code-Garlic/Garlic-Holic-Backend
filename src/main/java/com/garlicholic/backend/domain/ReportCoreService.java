@@ -6,6 +6,7 @@ import com.garlicholic.backend.storage.ReportEntity;
 import com.garlicholic.backend.storage.ReportJpaRepository;
 import com.garlicholic.backend.storage.UserEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +29,8 @@ public class ReportCoreService {
                 .toList();
     }
 
-    public void create(String newHealthStatus) {
+    @Transactional
+    public void create(String newHealthStatus, String condition) {
         LocalDateTime todayStart = LocalDate.now().atStartOfDay();
         LocalDateTime todayEnd = LocalDate.now().atTime(LocalTime.MAX);
 
@@ -37,9 +39,10 @@ public class ReportCoreService {
 
         if (report.isPresent()) {
             report.get().updateHealthStatus(newHealthStatus);
+            report.get().updateConditionText(condition);
         } else {
             reportJpaRepository.save(new ReportEntity(
-                    1L, "좋음", newHealthStatus, false, "none", "메모", LocalDateTime.now()
+                    1L, condition, newHealthStatus, false, "none", "메모", LocalDateTime.now()
             ));
         }
     }

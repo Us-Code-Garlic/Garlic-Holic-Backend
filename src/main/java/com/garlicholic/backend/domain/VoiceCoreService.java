@@ -14,6 +14,7 @@ import java.io.File;
 public class VoiceCoreService {
 
     private final AIServer aiServer;
+    private final ReportCoreService reportCoreService;
     private final SpeechToTextService speechToTextService;
     private final AudioConvertor audioConvertor;
     private final AudioWriter audioWriter;
@@ -27,6 +28,11 @@ public class VoiceCoreService {
 
         DiagnosisResponse diagnosisResponse = aiServer.postCheckDementia(text, wavFile);
         dementiaHistoryJpaRepository.save(DementiaHistoryEntity.of(1L, diagnosisResponse));
+
+        reportCoreService.create(
+                diagnosisResponse.getState().getHealthResult().getStatus(),
+                diagnosisResponse.getState().getMoodResult().getMood()
+        );
 
         return diagnosisResponse;
     }

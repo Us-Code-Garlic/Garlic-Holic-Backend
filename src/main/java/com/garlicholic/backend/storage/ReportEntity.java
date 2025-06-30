@@ -31,6 +31,10 @@ public class ReportEntity {
         this.healthStatus = healthStatus;
     }
 
+    public void updateConditionText(String conditionText) {
+        this.conditionText = conditionText;
+    }
+
     public ReportEntity(Long userId, String conditionText, String healthStatus, Boolean isMedicine, String quizScore, String memo, LocalDateTime createdAt) {
         this.userId = userId;
         this.conditionText = conditionText;

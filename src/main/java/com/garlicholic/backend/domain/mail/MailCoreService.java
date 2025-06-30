@@ -5,6 +5,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,8 +36,8 @@ public class MailCoreService {
         String mailContent = ReportTemplateGenerator.generate(reportMailData);
         helper.setText(mailContent, true);
 
-        FileSystemResource image = new FileSystemResource(new File("src/main/resources/static/banner.png"));
-        helper.addInline("banner", image);
+        ClassPathResource banner = new ClassPathResource("static/banner.png");
+        helper.addInline("banner", banner);
 
         mailSender.send(message);
     }

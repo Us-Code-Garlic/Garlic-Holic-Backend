@@ -6,15 +6,12 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Service;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 @Service
 public class SpeechToTextService {
 
     public String transcribe(MultipartFile file) throws Exception {
-        InputStream credentialsStream = new FileInputStream("src/main/resources/google-credentials.json");
-        GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream);
+        GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
         SpeechSettings settings = SpeechSettings.newBuilder()
                 .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
                 .build();
